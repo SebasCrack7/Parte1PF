@@ -2,17 +2,34 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import numpy as np
-
-# 0. Navegación entre “Portada” y “Dashboard”
+# 0. Configuración global y estado de navegación
 st.set_page_config(layout="wide")
-seccion = st.sidebar.radio("Sección", ["Proyecto Final", "Analisis del Desempeño Económico"])
 
-if seccion == "Proyecto Final":
-    st.title("📊 Proyecto Final")
-    # Parte 1 como header
-    st.header("Parte 1: Análisis del Desempeño Económico")
-    
-    # Subdivisión 1: Indicadores
+# Inicializamos el estado si no existe
+if 'seccion' not in st.session_state:
+    st.session_state.seccion = 'Proyecto Final'
+
+# Permitimos también cambiar desde la barra lateral
+choice = st.sidebar.radio(
+    "Sección",
+    ['Proyecto Final', 'Parte1'],
+    index=['Proyecto Final','Parte1'].index(st.session_state.seccion)
+)
+st.session_state.seccion = choice
+
+# ——— Portada ———
+if st.session_state.seccion == 'Proyecto Final':
+    # Cabecera con botón a la derecha
+    col1, col2 = st.columns([4,1])
+    with col1:
+        st.title("📊 Proyecto Final")
+        st.header("Parte 1: Análisis del Desempeño Económico")
+    with col2:
+        if st.button("Ir a Parte1"):
+            st.session_state.seccion = 'Parte1'
+            
+            
+    # Contenido de la portada
     st.subheader("Indicadores a Analizar")
     st.markdown("""
     - Índice COLCAP  
@@ -22,22 +39,11 @@ if seccion == "Proyecto Final":
     - Desempleo
     """)
     
-    # Línea divisoria
-    st.markdown("---")
-    
-    # Subdivisión 2: Integrantes
     st.subheader("Integrantes del grupo")
-    nombres = [
-        "Sebastián Adames",
-        "Dayana Chala",
-        "Jacobo Isaza",
-        "Andrés Murcia",
-        "Felipe Neira"
-    ]
-    for n in nombres:
+    for n in ["Sebastián Adames","Dayana Chala","Jacobo Isaza","Andrés Murcia","Felipe Neira"]:
         st.text(n)
-    
     st.stop()
+
 
 
 # 1. Carga de datos y corrección de escala
