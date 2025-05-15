@@ -3,28 +3,28 @@ import pandas as pd
 import altair as alt
 import numpy as np
 
-# 0. Configuración global
+# Configuración
 st.set_page_config(layout="wide")
 
-# 1. Navegación principal
-if 'seccion' not in st.session_state:
-    st.session_state.seccion = 'Proyecto Final'
-
-st.session_state.seccion = st.sidebar.radio(
+# --------------------------------------
+# 1) Navegación principal mediante radio
+# --------------------------------------
+seccion = st.sidebar.radio(
     "Sección",
-    ['Proyecto Final', 'Parte 1', 'Parte 2'],
-    index=['Proyecto Final', 'Parte 1', 'Parte 2'].index(st.session_state.seccion)
+    ["Proyecto Final", "Parte 1", "Parte 2"]
 )
 
-# ——— Portada ———
-if st.session_state.seccion == 'Proyecto Final':
-    col1, col2 = st.columns([4,1])
-    with col1:
-        st.title("📊 Proyecto Final")
-        st.header("Parte 1: Análisis del Desempeño Económico")
-    with col2:
-        if st.button("Ir a Parte 1"):
-            st.session_state.seccion = 'Parte 1'
+# --------------------------------------
+# 2) Portada
+# --------------------------------------
+if seccion == "Proyecto Final":
+    st.title("📊 Proyecto Final")
+   
+    st.subheader("Integrantes del grupo")
+    for n in ["Sebastián Adames","Dayana Chala","Jacobo Isaza","Andrés Murcia","Felipe Neira"]:
+        st.text(n)
+    
+    st.subheader("Parte 1: Análisis de los Discursos del Presidente")
     st.subheader("Indicadores a Analizar")
     st.markdown("""
     - Índice COLCAP  
@@ -33,14 +33,18 @@ if st.session_state.seccion == 'Proyecto Final':
     - Inflación  
     - Desempleo
     """)
-    st.subheader("Integrantes del grupo")
-    for n in ["Sebastián Adames","Dayana Chala","Jacobo Isaza","Andrés Murcia","Felipe Neira"]:
-        st.text(n)
+    st.subheader("Parte 2: Análisis del Desempeño Económico")
+    st.markdown("""
+    -Nubes de palabras        
+    -Discursos seleccionados
+    """)
     st.stop()
 
-# ——— Parte 1: Dashboard ———
-elif st.session_state.seccion == 'Parte 1':
-    # Carga y saneamiento de datos (igual que antes)...
+# --------------------------------------
+# 3) Parte 1: Dashboard
+# --------------------------------------
+elif seccion == "Parte 1":
+    # Carga y saneamiento
     @st.cache_data
     def load_data():
         mens = pd.read_csv('macro_mensual.csv', index_col='fecha', parse_dates=['fecha'])
@@ -50,12 +54,14 @@ elif st.session_state.seccion == 'Parte 1':
         mens['trm']    = mens['trm'].mask(mens['trm']   < 1000, np.nan).interpolate('time').ffill()
         mens['colcap'] = mens['colcap'].mask(mens['colcap'] < 500,  np.nan).interpolate('time').ffill()
         return mens, tri
+
     mensual, trimestral = load_data()
 
-    # Selector de vista **sólo** en Parte 1
+    # Selector interno para vistas de Parte 1
     vista = st.sidebar.radio("Vista", ["Mensual", "Trimestral", "Conclusiones"])
+
     if vista in ["Mensual", "Trimestral"]:
-        # … aquí tu código de gráficos (igual que antes) …
+        # Configuración de gráficos...
         col_labels = {
             'trm':'TRM (COP/USD)', 'pib_real':'PIB real (Miles mm COP)',
             'inflacion':'Inflación (%)','desempleo':'Desempleo (%)','colcap':'Índice ColCAP'
@@ -73,12 +79,13 @@ elif st.session_state.seccion == 'Parte 1':
                 mask = (df.index>=s)&(df.index<e)
                 df.loc[mask,'periodo'] = n
             return df.dropna(subset=['periodo'])
+
         mensual_    = asignar_periodo(mensual)
         trimestral_ = asignar_periodo(trimestral)
+        df_sel      = mensual_ if vista=='Mensual' else trimestral_
 
-        df_sel = mensual_ if vista=='Mensual' else trimestral_
         indicador = st.sidebar.selectbox("Indicador", df_sel.columns.drop('periodo'))
-        label = col_labels[indicador]
+        label     = col_labels[indicador]
 
         st.header(f"Tendencia de {label} ({vista})")
         y_axis = alt.Y(f"{indicador}:Q", title=label, axis=alt.Axis(format=",.0f"))
@@ -106,9 +113,8 @@ elif st.session_state.seccion == 'Parte 1':
         )
         st.altair_chart(bar, use_container_width=True)
 
-    elif vista == "Conclusiones":
+    else:  # Conclusiones en Parte 1
         st.header("Conclusiones")
-        
         st.write("""
         A lo largo de este análisis hemos observado cómo los distintos periodos presidenciales 
     se reflejan en la evolución de la TRM, el Índice COLCAP y las principales variables macroeconómicas. 
@@ -124,38 +130,33 @@ elif st.session_state.seccion == 'Parte 1':
         """)
     st.stop()
 
-# ——— Parte 2 ———
-elif st.session_state.seccion == 'Parte 2':
+# --------------------------------------
+# 4) Parte 2: Nubes y Discursos
+# --------------------------------------
+elif seccion == "Parte 2":
     st.title("Parte 2: Análisis de discursos del presidente Petro")
-    
-    # Sub-selector de Parte 2
+
     opcion2 = st.sidebar.radio("Opciones Parte 2", ["Nubes de palabras", "Discursos"])
-    
+
     if opcion2 == "Nubes de palabras":
         st.subheader("Nubes de Palabras")
         cols = st.columns(2)
-        cols[0].image(
-            "cloud1.png",
-            use_container_width=True,
-            caption="Discurso 1 - Nube de Palabras"
-        )
-        cols[1].image(
-            "cloud2.png",
-            use_container_width=True,
-            caption="Discurso 2 - Nube de Palabras"
-        )
-    
-    elif opcion2 == "Discursos":
+        cols[0].image("cloud1.png", use_container_width=True, caption="Discurso 1 - Nube de Palabras")
+        cols[1].image("cloud2.png", use_container_width=True, caption="Discurso 2 - Nube de Palabras")
+
+    else:  # Discursos
         st.subheader("Discursos")
         for idx, fname in enumerate(["discurso1.txt", "discurso2.txt"], start=1):
             try:
-                with open(fname, 'r', encoding='utf-8') as f:
-                    texto = f.read()
+                texto = open(fname, encoding='utf-8').read()
                 st.markdown(f"**Discurso {idx}:**")
                 st.write(texto)
                 st.markdown("---")
             except Exception as e:
                 st.error(f"No se pudo leer {fname}: {e}")
-    
+    st.markdown("""
+    **Fuente:**  
+    Presidencia de la República de Colombia. (n.d.). *Discursos*. Recuperado el 15 de mayo de 2025, de https://www.presidencia.gov.co/prensa/discursos
+    """)
     st.stop()
 
