@@ -11,7 +11,7 @@ st.set_page_config(layout="wide")
 # --------------------------------------
 seccion = st.sidebar.radio(
     "Sección",
-    ["Proyecto Final", "Parte 1", "Parte 2"]
+    ["Proyecto Final", "Parte 1", "Parte 2", "Parte 3"]
 )
 
 # --------------------------------------
@@ -159,4 +159,14 @@ elif seccion == "Parte 2":
     Presidencia de la República de Colombia. (n.d.). *Discursos*. Recuperado el 15 de mayo de 2025, de https://www.presidencia.gov.co/prensa/discursos
     """)
     st.stop()
+    
+# Carga de texto para la Parte 3
+def cargar_texto_parte3():
+    with open("texto3.txt", "r", encoding="utf-8") as file:
+        return file.read()
 
+# Renderizado de cada sección
+if seccion == 'Parte 3':
+    st.title("Parte 3: Relación entre Desempeño Económico y Discursos")
+    texto = cargar_texto_parte3()
+    st.write(texto)
