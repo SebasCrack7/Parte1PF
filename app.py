@@ -164,25 +164,25 @@ def cargar_texto_parte3():
     with open("texto3.txt", "r", encoding="utf-8") as file:
         return file.read()
 if seccion == 'Parte 3':
-    
     st.title("Parte 3: Relación entre Desempeño Económico y Discursos")
-    
+
     texto = cargar_texto_parte3()
-    
-    # Dividir el texto por párrafos dobles
-    parrafos = texto.split("\n\n")
-    
-    # Dividir los párrafos en dos mitades (orden de lectura correcto)
-    mitad = len(parrafos) // 2
-    parrafos_col1 = parrafos[:mitad]
-    parrafos_col2 = parrafos[mitad:]
+
+    # Dividir el texto por la mitad basada en caracteres (más balance visual)
+    mitad = len(texto) // 2
+
+    # Buscar el siguiente salto de párrafo para no cortar una frase
+    corte = texto.find("\n", mitad)
+    if corte == -1:
+        corte = mitad  # fallback en caso de no encontrar salto
+
+    texto1 = texto[:corte].strip()
+    texto2 = texto[corte:].strip()
 
     col1, col2 = st.columns(2)
 
     with col1:
-        for parrafo in parrafos_col1:
-            st.markdown(parrafo, unsafe_allow_html=True)
+        st.markdown(texto1, unsafe_allow_html=True)
 
     with col2:
-        for parrafo in parrafos_col2:
-            st.markdown(parrafo, unsafe_allow_html=True)
+        st.markdown(texto2, unsafe_allow_html=True)
