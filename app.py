@@ -159,14 +159,25 @@ elif seccion == "Parte 2":
     Presidencia de la República de Colombia. (n.d.). *Discursos*. Recuperado el 15 de mayo de 2025, de https://www.presidencia.gov.co/prensa/discursos
     """)
     st.stop()
-    
-# Carga de texto para la Parte 3
+#######    
 def cargar_texto_parte3():
     with open("texto3.txt", "r", encoding="utf-8") as file:
         return file.read()
 
-# Renderizado de cada sección
+# Mostrar Parte 3 en dos columnas
 if seccion == 'Parte 3':
     st.title("Parte 3: Relación entre Desempeño Económico y Discursos")
+    
     texto = cargar_texto_parte3()
-    st.write(texto)
+    
+    # Separar el texto por párrafos (basado en doble salto de línea)
+    parrafos = texto.split("\n\n")
+    
+    col1, col2 = st.columns(2)
+    
+    # Mostrar en dos columnas alternadas
+    for i, parrafo in enumerate(parrafos):
+        if i % 2 == 0:
+            col1.markdown(parrafo, unsafe_allow_html=True)
+        else:
+            col2.markdown(parrafo, unsafe_allow_html=True)
