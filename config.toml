@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#1f77b4"             # Azul principal
+backgroundColor = "#e6f2f0"          # Verde muy claro para el fondo
+secondaryBackgroundColor = "#cce5df" # Verde suave para los cuadros
+textColor = "#003333"                # Verde oscuro
+font = "sans serif"
