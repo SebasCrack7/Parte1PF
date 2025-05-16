@@ -141,8 +141,8 @@ elif seccion == "Parte 2":
     if opcion2 == "Nubes de palabras":
         st.subheader("Nubes de Palabras")
         cols = st.columns(2)
-        cols[0].image("cloud1.png", use_container_width=True, caption="Discurso 1 - Nube de Palabras")
-        cols[1].image("cloud2.png", use_container_width=True, caption="Discurso 2 - Nube de Palabras")
+        cols[0].image("cloud4.png", use_container_width=True, caption="Discurso 1 - Nube de Palabras")
+        cols[1].image("cloud3.png", use_container_width=True, caption="Discurso 2 - Nube de Palabras")
 
     else:  # Discursos
         st.subheader("Discursos")
