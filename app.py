@@ -160,24 +160,25 @@ elif seccion == "Parte 2":
     """)
     st.stop()
 #######    
-def cargar_texto_parte3():
-    with open("texto3.txt", "r", encoding="utf-8") as file:
-        return file.read()
-
-# Mostrar Parte 3 en dos columnas
 if seccion == 'Parte 3':
     st.title("Parte 3: Relación entre Desempeño Económico y Discursos")
     
     texto = cargar_texto_parte3()
     
-    # Separar el texto por párrafos (basado en doble salto de línea)
+    # Dividir el texto por párrafos dobles
     parrafos = texto.split("\n\n")
     
+    # Dividir los párrafos en dos mitades (orden de lectura correcto)
+    mitad = len(parrafos) // 2
+    parrafos_col1 = parrafos[:mitad]
+    parrafos_col2 = parrafos[mitad:]
+
     col1, col2 = st.columns(2)
-    
-    # Mostrar en dos columnas alternadas
-    for i, parrafo in enumerate(parrafos):
-        if i % 2 == 0:
-            col1.markdown(parrafo, unsafe_allow_html=True)
-        else:
-            col2.markdown(parrafo, unsafe_allow_html=True)
+
+    with col1:
+        for parrafo in parrafos_col1:
+            st.markdown(parrafo, unsafe_allow_html=True)
+
+    with col2:
+        for parrafo in parrafos_col2:
+            st.markdown(parrafo, unsafe_allow_html=True)
