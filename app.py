@@ -116,17 +116,15 @@ elif seccion == "Parte 1":
     else:  # Conclusiones en Parte 1
         st.header("Conclusiones")
         st.write("""
-        A lo largo de este análisis hemos observado cómo los distintos periodos presidenciales 
-    se reflejan en la evolución de la TRM, el Índice COLCAP y las principales variables macroeconómicas. 
-    Las expansiones o contracciones bruscas de la tasa de cambio coinciden con ajustes de política 
-    monetaria en respuesta a choques externos, mientras que la trayectoria del COLCAP suele anticipar 
-    cambios en la confianza inversora frente a decisiones regulatorias.
+        A lo largo del análisis de los indicadores macroeconómicos —como la TRM, el índice COLCAP, el PIB, la inflación y el desempleo— se observa una relación estrecha entre los ciclos políticos y la evolución económica reciente. Durante el periodo analizado, la tasa de cambio ha mostrado sensibilidad a factores tanto internos como externos, evidenciando episodios de volatilidad vinculados a cambios en las expectativas del mercado ante decisiones de política monetaria, incertidumbre institucional o anuncios de reformas estructurales.
 
-    Adicionalmente, el estudio de correlaciones revela que incrementos en la inflación tienden a 
-    preceder aumentos en la tasa de desempleo, especialmente en fases de ajuste fiscal. 
-    Esto sugiere que las políticas gubernamentales con foco en control de precios pueden 
-    tener efectos de segundo orden sobre el mercado laboral, un hallazgo clave para diseñar 
-    intervenciones más equilibradas.
+En particular, se identifica que las variaciones abruptas en la TRM suelen coincidir con escenarios de incertidumbre política o con anuncios que generan dudas en los mercados sobre la estabilidad macroeconómica. Por su parte, el comportamiento del índice COLCAP actúa como un termómetro anticipado de la confianza inversionista: sus caídas tienden a preceder momentos de presión sobre otras variables, como la inflación o el desempleo.
+
+El análisis de la inflación y el desempleo revela una dinámica consistente con los modelos teóricos: los incrementos sostenidos de precios han coincidido con posteriores aumentos en el desempleo, especialmente en contextos donde la política fiscal ha sido contractiva o donde las presiones de costos han sido trasladadas a los consumidores. Esto refuerza la necesidad de un diseño coordinado entre política monetaria y fiscal para mitigar efectos adversos sobre el mercado laboral.
+
+Finalmente, el estudio de correlaciones y tendencias sugiere que los indicadores económicos reaccionan no solo a fundamentos estructurales, sino también a las señales emitidas por el gobierno y su narrativa económica. La combinación de estos factores permite concluir que las políticas públicas y la percepción de los agentes económicos tienen un papel determinante en la estabilidad de las variables analizadas. Por tanto, una estrategia económica coherente, acompañada de una comunicación clara y técnicamente sustentada, resulta clave para la consolidación de un entorno macroeconómico equilibrado.
+
+
         """)
     st.stop()
 
