@@ -21,7 +21,7 @@ if seccion == "Proyecto Final":
     st.title("📊 Proyecto Final")
    
     st.subheader("Integrantes del grupo")
-    for n in ["Sebastián Adames","Dayana Chala","Jacobo Isaza","Andrés Murcia","Felipe Neira"]:
+    for n in ["Sebastián Adames","Dayana Chala","Jacobo Isaza","Andrés Murcia"]:
         st.text(n)
     
     st.subheader("Parte 1: Análisis de los Discursos del Presidente")
