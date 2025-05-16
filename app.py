@@ -160,7 +160,11 @@ elif seccion == "Parte 2":
     """)
     st.stop()
 #######    
+def cargar_texto_parte3():
+    with open("texto3.txt", "r", encoding="utf-8") as file:
+        return file.read()
 if seccion == 'Parte 3':
+    
     st.title("Parte 3: Relación entre Desempeño Económico y Discursos")
     
     texto = cargar_texto_parte3()
